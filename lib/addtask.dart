@@ -12,16 +12,25 @@ class AddTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Add Task')),
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+          backgroundColor: Colors.black,
+          iconTheme: IconThemeData(color: Colors.white),
+          title: Text(
+            'Add Task',
+            style: TextStyle(color: Colors.white),
+          )),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
+              style: TextStyle(color: Colors.white),
               controller: taskNameController,
               decoration: InputDecoration(labelText: 'Task Name'),
             ),
             TextField(
+              style: TextStyle(color: Colors.white),
               controller: noteController,
               decoration: InputDecoration(labelText: 'Note'),
             ),
