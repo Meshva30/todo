@@ -4,6 +4,7 @@ import 'addtask.dart';
 import 'controller/todo_controller.dart';
 import 'editscreen.dart';
 import 'model/todo_model.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -101,7 +102,9 @@ class TaskCard extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: Icon(Icons.delete,),
+              icon: Icon(
+                Icons.delete,
+              ),
               onPressed: () {
                 taskController.deleteTask(task.id!);
               },
