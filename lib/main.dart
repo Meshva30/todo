@@ -4,7 +4,6 @@ import 'addtask.dart';
 import 'controller/todo_controller.dart';
 import 'editscreen.dart';
 import 'model/todo_model.dart';
-
 void main() {
   runApp(MyApp());
 }
