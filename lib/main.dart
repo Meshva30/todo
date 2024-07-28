@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'addtask.dart';
+import 'screen/addtask.dart';
 import 'controller/todo_controller.dart';
-import 'editscreen.dart';
+import 'screen/editscreen.dart';
 import 'model/todo_model.dart';
 
 void main() {
@@ -55,13 +55,14 @@ class TaskListScreen extends StatelessWidget {
         backgroundColor: Colors.blue,
         shape: CircleBorder(),
         onPressed: () {
-          Get.to(() => AddTaskScreen());
+          showAddTaskDialog(context);
         },
         child: Icon(
           Icons.add,
           size: 30,
         ),
       ),
+
     );
   }
 }

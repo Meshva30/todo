@@ -1,36 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'controller/todo_controller.dart';
-import 'model/todo_model.dart';
+import '../controller/todo_controller.dart';
+import '../model/todo_model.dart';
 
-class AddTaskScreen extends StatelessWidget {
-  final TaskController taskController = Get.find();
-  final TextEditingController taskNameController = TextEditingController();
-  final TextEditingController noteController = TextEditingController();
-  final RxInt priority = 1.obs;
+class EditTaskDialog extends StatelessWidget {
+  final Task task;
+  final TextEditingController taskNameController;
+  final TextEditingController noteController;
+  final RxInt priority;
+
+  EditTaskDialog({required this.task})
+      : taskNameController = TextEditingController(text: task.taskName),
+        noteController = TextEditingController(text: task.note),
+        priority = task.priority.obs;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-          backgroundColor: Colors.black,
-          iconTheme: IconThemeData(color: Colors.white),
-          title: Text(
-            'Add Task',
-            style: TextStyle(color: Colors.white),
-          )),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+    final TaskController taskController = Get.find();
+
+    return AlertDialog(
+      title: Text('Edit Task'),
+      content: SingleChildScrollView(
         child: Column(
           children: [
             TextField(
-              style: TextStyle(color: Colors.white),
               controller: taskNameController,
               decoration: InputDecoration(labelText: 'Task Name'),
             ),
             TextField(
-              style: TextStyle(color: Colors.white),
               controller: noteController,
               decoration: InputDecoration(labelText: 'Note'),
             ),
@@ -46,7 +43,6 @@ class AddTaskScreen extends StatelessWidget {
                         content: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            // Priority options
                             ListTile(
                               title: Text('Low Priority'),
                               onTap: () {
@@ -70,7 +66,6 @@ class AddTaskScreen extends StatelessWidget {
                       );
                     },
                   );
-
                   if (selectedPriority != null) {
                     priority.value = selectedPriority;
                   }
@@ -78,24 +73,27 @@ class AddTaskScreen extends StatelessWidget {
                 child: Text('Select Priority (Current: ${priority.value})'),
               );
             }),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final newTask = Task(
-                  taskName: taskNameController.text,
-                  note: noteController.text,
-                  priority: priority.value,
-                );
-
-                taskController.addTask(newTask);
-
-                Get.back();
-              },
-              child: Text('Add Task'),
-            ),
           ],
         ),
       ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            task.taskName = taskNameController.text;
+            task.note = noteController.text;
+            task.priority = priority.value;
+            taskController.updateTask(task);
+            Navigator.pop(context);
+          },
+          child: Text('Save'),
+        ),
+      ],
     );
   }
 }
