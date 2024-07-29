@@ -9,6 +9,7 @@ class AddTaskDialog extends StatelessWidget {
   final TextEditingController noteController = TextEditingController();
   final RxInt priority = 1.obs;
 
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
